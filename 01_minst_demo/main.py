@@ -21,7 +21,6 @@ LEARNING_RATE = 0.01
 # 输入(原始图片)是PIL Image 格式（0 - 255的像素点）
 # 神经网络只接受Tensor（0.0 - 1.0的浮点数）
 # 类比Embedding - ToTensor()会把图片变为Tensor,并自动归一化到【0,1】
-
 transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize((0.1307,),(0.3801,))#标准化：减均值，除标准差（让数据分布在0附近，训练更快）
@@ -67,7 +66,6 @@ test_loader = DataLoader(
 # next(iter()) 是获取迭代器第一个元素的写法
 # iter()将可迭代对象转为可以抽取的迭代器
 # next()抽取迭代器的下一个
-
 images, labels = next(iter(train_loader))
 
 print("-" * 30)
