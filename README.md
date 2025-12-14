@@ -6,7 +6,7 @@ Welcome to my repository! This is where I document my journey into Deep Learning
 
 ### Phase 1: The Beginning (入门篇)
 - [x] **Environment Setup**: Configured Anaconda & PyTorch on Linux.
-- [x] **MNIST Digit Recognition**: 
+- [x] **MNIST Digit Recognition(Hello DL!)**: 
   - Implemented a Fully Connected Network (SimpleNet).
   - Achieved **95.19%** accuracy.
   - Features: Training loop, Loss visualization, Model saving/loading.
