@@ -8,12 +8,12 @@ class ResidualBlock(nn.Module):
         # 1.主干道:正常的卷积 - BN - ReLU - 卷积 - BN
         self.main_path = nn.Sequential(
             # 第一层
-            nn.Conv2d(in_channels,out_channels,kernel_size=3,stride=stride,padding=1),
+            nn.Conv2d(in_channels,out_channels,kernel_size=3,stride=stride,padding=1,bias=False),
             nn.BatchNorm2d(out_channels),
             nn.ReLU(inplace=True),
             
             # 第二层
-            nn.Conv2d(out_channels, out_channels, kernel_size=3, stride=1,padding=1),
+            nn.Conv2d(out_channels, out_channels, kernel_size=3, stride=1,padding=1,bias=False),
             nn.BatchNorm2d(out_channels)
         )
         
@@ -23,7 +23,7 @@ class ResidualBlock(nn.Module):
         if stride != 1 or in_channels != out_channels:
             self.shorctcut = nn.Sequential(
                 # 用1*1的卷积核来调整厚度，纯粹凑形状
-                nn.Conv2d(in_channels,out_channels,kernel_size=1,stride=stride),
+                nn.Conv2d(in_channels,out_channels,kernel_size=1,stride=stride,bias=False),
                 nn.BatchNorm2d(out_channels)
             )
             
