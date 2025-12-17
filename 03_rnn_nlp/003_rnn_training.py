@@ -47,7 +47,7 @@ class ReviewDataset(Dataset):
         ids = [self.word_dict.get(w,self.word_dict['<UNK>']) for w in text.split()]
         return torch.tensor(ids), torch.tensor(label, dtype=torch.long)
 
-# 4. Collate Function(打包员)        
+# 4. Collate Function(打包员)     
 # 把DataLoader中取出来的数据打包
 def collate_fn(batch):
     
@@ -60,22 +60,22 @@ def collate_fn(batch):
 
     # 3.标签转成tensor
     labels = torch.stack(labels)
-    return padded_texts, labels
+    return padded_texts, labels  
 
 # 5.定义模型
-class SentimentRNN(nn.Module):
+class SentimentLSTM(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_dim, output_dim):
         super().__init__()
         # padding_idx=0: 告诉模型，不学习padding，不学习0的特征
         self.embedding = nn.Embedding(vocab_size,embed_dim,padding_idx=0)
-        self.rnn = nn.RNN(embed_dim, hidden_dim,batch_first=True)
+        self.LSTM = nn.LSTM(embed_dim, hidden_dim,batch_first=True)
         self.fc = nn.Linear(hidden_dim, output_dim)
 
     def forward(self, x):
         embedded = self.embedding(x)
         # output : [Batch, Seq, Hidden]
         # hiddem : [1, Batch, Hidden]
-        _, hidden = self.rnn(embedded)
+        _, (hidden,cell) = self.LSTM(embedded)
         
         return self.fc(hidden.squeeze(0))
 # 6.训练循环
@@ -90,7 +90,7 @@ def main():
     train_ds = ReviewDataset(raw_data, word2idx)
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE,shuffle=True,collate_fn=collate_fn)
 
-    model = SentimentRNN(len(word2idx), EMBED_DIM, HIDDEN_DIM, 2)
+    model = SentimentLSTM(len(word2idx), EMBED_DIM, HIDDEN_DIM, 2)
     optimizer = optim.Adam(model.parameters(),lr=LR)
     critertion = nn.CrossEntropyLoss()
 
@@ -110,7 +110,7 @@ def main():
             print(f"Epoch : {epoch + 1}\tLoss : {total_loss / len(train_loader.dataset):.4f}")
 
     # 7.测试模型
-    test_sentences = ["i love it", "garbage movie", "terrible acting"]
+    test_sentences = ["i love it", "garbage movie", "terrible acting","It's just a waste of time!","How asesome it is! "]
     model.eval()
     
     for sent in test_sentences:
