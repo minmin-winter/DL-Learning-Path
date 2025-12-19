@@ -41,5 +41,3 @@ class ResidualBlock(nn.Module):
         out = nn.ReLU(inplace=True)(out)
 
         return out
-
-     
