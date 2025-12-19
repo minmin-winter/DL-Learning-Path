@@ -25,7 +25,7 @@ class MultiHeadAttention(nn.Module):
         V = self.w_v(x).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
 
         scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(self.d_k)
-        atten_weights = torch.softmax(scores, dim=1)
+        atten_weights = torch.softmax(scores, dim=-1)
         context = torch.matmul(atten_weights, V)
 
         context = context.transpose(1, 2).contiguous().view(batch_size, seq_len, -1)
@@ -79,7 +79,7 @@ class TransformerClassifier(nn.Module):
         self.embedding = nn.Embedding(vocab_size, d_model)
 
         # 2.Positional Encoding 
-        self.pos_encoder = PositionwiseFeedForward(d_model, max_len) # 3.堆叠Transformer Blocks
+        self.pos_encoder = PositionalEncoding(d_model, max_len) # 3.堆叠Transformer Blocks
         self.layers = nn.ModuleList([
             TransformerBlock(d_model, num_heads, d_ff)
             for _ in range(num_layers)
@@ -112,8 +112,9 @@ if __name__ == "__main__":
     D_MODEL = 64
     NUM_HEADS = 4
     D_FF = 256
-    NUM_LAYERS = 12   # 堆叠3层
+    NUM_LAYERS = 3 # 堆叠3层
     OUTPUT_DIM = 2   # 输出的结果：分的两类
+    EPOCHS = 100
 
     # 1.实例化模型
     model = TransformerClassifier(VOCAB_SIZE, D_MODEL, NUM_HEADS, D_FF, NUM_LAYERS,OUTPUT_DIM)
@@ -125,18 +126,20 @@ if __name__ == "__main__":
 
     # 3.定义损失和优化器
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
     print(f"Trasformer开始运行...")
 
     # 4.跑一步
-    model.train()
-    optimizer.zero_grad()
-    outputs = model(inputs)
-    loss = criterion(outputs, labels)
-    loss.backward()
-    optimizer.step()
+    for epoch in range(EPOCHS):
+        model.train()
+        optimizer.zero_grad()
+        outputs = model(inputs)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
 
-    print(f"输入尺寸: {inputs.shape}")
-    print(f"输出尺寸: {outputs.shape}") # 应该是 [2, 2]
-    print(f"Loss: {loss.item():.4f}")
+        #print(f"输入尺寸: {inputs.shape}")
+        #print(f"输出尺寸: {outputs.shape}") # 应该是 [2, 2]
+        if not (epoch+1)%10:
+            print(f"Epoch : {epoch + 1}\tLoss: {loss.item():.4f}")
