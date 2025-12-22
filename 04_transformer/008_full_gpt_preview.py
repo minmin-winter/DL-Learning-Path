@@ -43,7 +43,7 @@ class Head(nn.Module):
         wei = q @ k.transpose(-1, -2) * (C ** -0.5)
 
         # 3.Mask
-        wei = wei.mask_fill(self.tril[:T, :T] == 0, float('-inf'))
+        wei = wei.masked_fill(self.tril[:T, :T] == 0, float('-inf'))
 
         # 4.Softmax归一化
         wei = F.softmax(wei, dim=-1)
@@ -73,7 +73,7 @@ class MultiHeadAttention(nn.Module):
         out = torch.cat(head_outs, dim=-1)
 
         # 3. 投影 + Dropout
-        out = self.dropout(out)
+        out = self.proj(out)
         out = self.dropout(out)
 
         return out
@@ -113,7 +113,7 @@ class Block(nn.Module):
         return x
 
 # 5.GPT模型本体
-class GPTLanguagerModel(nn.Module):
+class GPTLanguageModel(nn.Module):
     def __init__(self):
         super().__init__()
         # 词嵌入表(Content)
@@ -169,14 +169,14 @@ class GPTLanguagerModel(nn.Module):
             # 概率转换
             probs = F.softmax(logits, dim=-1)
             # 采样
-            ind_next = torch.multinomial(probs, num_samples=1)
+            idx_next = torch.multinomial(probs, num_samples=1)
             # 拼接
-            idx = torch.cat((idx, ind_next), dim=1)
+            idx = torch.cat((idx, idx_next), dim=1)
         return idx
     
 # 6.数据准备与训练(Main Execution)
 if __name__ == "__main__":
-    with open("input.txt", encoding='utf-8') as f:
+    with open("./train_data/input.txt", encoding='utf-8') as f:
         text = f.read()
 
     # 构建词典
@@ -204,7 +204,7 @@ if __name__ == "__main__":
         return x, y
 
     # 实例化模型
-    model = GPTLanguagerModel()
+    model = GPTLanguageModel()
     m = model.to(device)
     print(f"Model parameters: {sum(p.numel() for p in m.parameters())/1e6:.2f}M")
 
@@ -212,9 +212,9 @@ if __name__ == "__main__":
 
     # training loop
     for iter in range(max_iters):
-        xb1, yb = get_batch('train')
+        xb, yb = get_batch('train')
 
-        logits, loss = model(xb1, yb)
+        logits, loss = model(xb, yb)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
