@@ -18,7 +18,7 @@ class Head(nn.Module):
         self.value = nn.Linear(n_embd, head_size, bias=False)
 
         # 2. 定义面具(Mask)
-        # register_buffer : 此参数不u需要训练，但是模型状态的一部分
+        # register_buffer : 此参数不需要训练，但是模型状态的一部分
         # torch.tril 创建一个下三角矩阵
         self.register_buffer('tril', torch.tril(torch.ones(block_size, block_size)))
 
@@ -59,4 +59,4 @@ print(f"输出形状:{out.shape}")
 # 4.看看Mask
 print("\n--- 查看第一句话的 Attention 矩阵 ---")
 print("行看作'当前字'，列看作'关注的字'")
-print(wei[0].tolist())
+print(wei[0].numpy())

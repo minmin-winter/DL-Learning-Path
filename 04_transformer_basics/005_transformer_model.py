@@ -79,7 +79,9 @@ class TransformerClassifier(nn.Module):
         self.embedding = nn.Embedding(vocab_size, d_model)
 
         # 2.Positional Encoding 
-        self.pos_encoder = PositionalEncoding(d_model, max_len) # 3.堆叠Transformer Blocks
+        self.pos_encoder = PositionalEncoding(d_model, max_len) 
+        
+        # 3.堆叠Transformer Blocks
         self.layers = nn.ModuleList([
             TransformerBlock(d_model, num_heads, d_ff)
             for _ in range(num_layers)

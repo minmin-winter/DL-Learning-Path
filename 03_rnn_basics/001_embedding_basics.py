@@ -11,7 +11,7 @@ sentences = [
 # 把每个独特的单词，映射成唯一的数字ID
 
 # 简单的拆分单词(Tokenization)
-word_list = " ".join(sentences).split() # ? = [*sentence]
+word_list = " ".join(sentences).split() # 
 # 去重并排序
 vocab = list(set(word_list))
 # <PAD>:padding,这里补零用的，句子长度不一样，短的要补齐

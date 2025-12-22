@@ -28,7 +28,7 @@ for text, label in raw_data:
 word2idx = {'<PAD>' : 0,'<UNK>' : 1}
 for i,word in enumerate(word_list):
     word2idx[word] = i + 2
-    
+
 print(f"词表大小:{len(word2idx)}")
 
 # 3.自定义dataset
