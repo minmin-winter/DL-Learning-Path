@@ -5,12 +5,6 @@ os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 import torch
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
 
-# ... 下面的代码保持不变 ...
-
-
-import torch
-from transformers import GPT2Tokenizer, GPT2LMHeadModel
-
 # 1. 加载GPT-2的分词器
 print("正在加载 Tokenizer...")
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
