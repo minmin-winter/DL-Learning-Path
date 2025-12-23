@@ -54,7 +54,7 @@ def train():
 
     # 2.准备数据
     # 注意：这里需根据实际情况调整
-    data_path = "../data/train_data/input.txt"
+    data_path = "./data/mini_gpt/input.txt"
     train_loader, val_loader, dataset = get_data_loaders(cfg, data_path)
 
     # 工程化关键点: 从数据集中动态获取真实的vocab_size
@@ -68,9 +68,10 @@ def train():
 
     # 4. 开始训练循环
     print(f"Start Training Loop...")
-    start_time = time.time()
 
-    for epoch in range(cfg.epoch):
+    max_steps = 5000
+    # for epoch in range(cfg.epoch):
+    for epoch in range(1):
         for step, (x, y) in enumerate(train_loader):
 
             x, y = x.to(device), y.to(device)
@@ -80,19 +81,26 @@ def train():
             loss.backward()
             optimizer.step()
 
-            if not step%100 :
-                print(f"Epoch: {epoch + 1}\tStep: {step}\tLoss: {loss.item():.4f}")
+            if not step%500 :
+                print(f"Epoch: {epoch + 1}\t Step: {step}\t Loss: {loss.item():.4f}")
+                os.makedirs('models', exist_ok=True)
+                save_path = f"models/mini_gpt_step_{step}.pth"
+                save_checkpoint(model, optimizer, epoch, loss, save_path)
+
+            if step >= max_steps:
+                print("Reached max steps. Training finished!")
+                break
 
         # 每个Epoch结束后的操作
 
         # 1.验证集测试
         val_loss = estimate_loss(model, val_loader, device)
-        print(f"End of Epoch: {epoch + 1}\tVal Loss: {val_loss:.4f}")
+        print(f"End of Epoch: {epoch + 1}\t Val Loss: {val_loss:.4f}")
 
-        # 2.保存模型(文档操作)
-        os.makedirs('models', exist_ok=True)
-        save_path = f"models/gpt_epoch_{epoch+1}.pth"
-        save_checkpoint(model, optimizer, epoch, val_loss, save_path)
+        ## 2.保存模型(文档操作)
+        #os.makedirs('models', exist_ok=True)
+        #save_path = f"models/gpt_epoch_{epoch+1}.pth"
+        #save_checkpoint(model, optimizer, epoch, val_loss, save_path)
 
 if __name__ == "__main__":
     train()

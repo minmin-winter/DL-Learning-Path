@@ -1,4 +1,5 @@
-data/MNIST
+data/*
+!data/mini_gpt/input.txt
 __pycache__/
 *.pyc
 *.pth

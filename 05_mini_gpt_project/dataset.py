@@ -43,10 +43,10 @@ class CharDataset(Dataset):
         return x, y
 
     def encode(self, s):
-        return [self.stoi(c) for c in s]
+        return [self.stoi[c] for c in s]
 
     def decode(self, l):
-        return "".join([self.itos(i) for i in l])
+        return "".join([self.itos[i] for i in l])
 
 def get_data_loaders(config, data_path):
     """
