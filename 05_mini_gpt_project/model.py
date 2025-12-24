@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
-import math
 
 # 1.单个注意力头(Single Head With Mask)
 class Head(nn.Module):

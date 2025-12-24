@@ -1,5 +1,12 @@
-data/*
-!data/mini_gpt/input.txt
+# 忽略 Python 编译缓存
 __pycache__/
 *.pyc
+
+# 忽略所有模型权重文件 (防止上传大文件)
+models/
 *.pth
+
+# 忽略数据文件夹
+data/
+# 保留 input.txt 示例
+!data/mini_gpt/input.txt

@@ -1,10 +1,6 @@
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import time
 import os
-
-# 导入自己写的模块
+import torch
+import torch.optim as optim
 from config import Config
 from model import GPTLanguageModel
 from dataset import get_data_loaders
@@ -70,7 +66,6 @@ def train():
     print(f"Start Training Loop...")
 
     max_steps = 5000
-    # for epoch in range(cfg.epoch):
     for epoch in range(1):
         for step, (x, y) in enumerate(train_loader):
 
@@ -92,15 +87,8 @@ def train():
                 break
 
         # 每个Epoch结束后的操作
-
-        # 1.验证集测试
         val_loss = estimate_loss(model, val_loader, device)
         print(f"End of Epoch: {epoch + 1}\t Val Loss: {val_loss:.4f}")
-
-        ## 2.保存模型(文档操作)
-        #os.makedirs('models', exist_ok=True)
-        #save_path = f"models/gpt_epoch_{epoch+1}.pth"
-        #save_checkpoint(model, optimizer, epoch, val_loss, save_path)
 
 if __name__ == "__main__":
     train()

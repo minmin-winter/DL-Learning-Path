@@ -18,7 +18,7 @@ model = GPTLanguageModel(cfg)
 model.to(device)
 
 # 4,关键：加载训练好的权重
-checkpoint_path = 'models/gpt_epoch_10.pth'
+checkpoint_path = 'models/mini_gpt_step_5000.pth'
 checkpoint = torch.load(checkpoint_path, map_location=device)
 model.load_state_dict(checkpoint['model_state_dict'])
 
