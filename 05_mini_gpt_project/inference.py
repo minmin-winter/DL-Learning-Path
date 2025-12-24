@@ -1,7 +1,7 @@
 import torch
 from config import Config
 from model import GPTLanguageModel
-from dataset import CharDataset
+from dataset import BPEDataset
 
 # 1.加载环境
 device = 'cpu'
@@ -10,7 +10,7 @@ print(f"Loading model on {device}...")
 # 2. 拿到Dataset里的解编码函数
 cfg = Config()
 data_path = "./data/mini_gpt/input.txt"
-dataset = CharDataset(cfg, data_path)
+dataset = BPEDataset(cfg, data_path)
 cfg.vocab_size = dataset.vocab_size
 
 # 3.初始化模型

@@ -1,0 +1,38 @@
+(base) minmin-winter@minmin-winter-ThinkBook-16-G7-IAH:~/文档/github_repositories/DL-Learning-Path$ conda activate ai_lab
+(ai_lab) minmin-winter@minmin-winter-ThinkBook-16-G7-IAH:~/文档/github_repositories/DL-Learning-Path$ python 05_mini_gpt_project/train.py
+Using device : cpu
+Loading GPT-2 tokenzier...
+Loading data from ./data/mini_gpt/input.txt ...
+Tokenizing data...
+Data loaded. Tokens length: 338025
+Vocab size updated to: 50257
+Start Training Loop...
+/home/minmin-winter/miniconda3/envs/ai_lab/lib/python3.9/site-packages/torch/utils/data/dataloader.py:666: UserWarning: 'pin_memory' argument
+is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+Epoch: 1         Step: 0         Loss: 13.2269
+--> Model saved to models/mini_gpt_step_0.pth
+Epoch: 1         Step: 500       Loss: 5.5457
+--> Model saved to models/mini_gpt_step_500.pth
+Epoch: 1         Step: 1000      Loss: 4.9172
+--> Model saved to models/mini_gpt_step_1000.pth
+Epoch: 1         Step: 1500      Loss: 4.6414
+--> Model saved to models/mini_gpt_step_1500.pth
+Epoch: 1         Step: 2000      Loss: 3.9247
+--> Model saved to models/mini_gpt_step_2000.pth
+Epoch: 1         Step: 2500      Loss: 3.8156
+--> Model saved to models/mini_gpt_step_2500.pth
+Epoch: 1         Step: 3000      Loss: 3.5102
+--> Model saved to models/mini_gpt_step_3000.pth
+Epoch: 1         Step: 3500      Loss: 3.4807
+--> Model saved to models/mini_gpt_step_3500.pth
+Epoch: 1         Step: 4000      Loss: 3.0330
+--> Model saved to models/mini_gpt_step_4000.pth
+Epoch: 1         Step: 4500      Loss: 2.9347
+--> Model saved to models/mini_gpt_step_4500.pth
+Epoch: 1         Step: 5000      Loss: 2.7824
+--> Model saved to models/mini_gpt_step_5000.pth
+Reached max steps. Training finished!
+(ai_lab) minmin-winter@minmin-winter-ThinkBook-16-G7-IAH:~/文档/github_repositories/DL-Learning-Path$
+
+
