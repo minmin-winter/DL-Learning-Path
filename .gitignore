@@ -1,12 +1,19 @@
 # 忽略 Python 编译缓存
-__pycache__/
+**/__pycache__/
 *.pyc
 
 # 忽略所有模型权重文件 (防止上传大文件)
-models/
-*.pth
+**/models/
+**/*.pth
 
 # 忽略数据文件夹
-data/
+**/data/*
 # 保留 input.txt 示例
-!data/mini_gpt/input.txt
+!**/data/mini_gpt/
+!**/data/mini_gpt/input.txt
+
+# 忽略日志文件夹里记录的其他乱七八糟
+**/logs/**
+# 保留里面的图片 
+!**/logs/**/
+!**/logs/**/*.png  
