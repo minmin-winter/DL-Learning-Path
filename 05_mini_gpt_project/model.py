@@ -129,7 +129,15 @@ class GPTLanguageModel(nn.Module):
 
         return logits, loss
     
-    def generate(self, idx, max_new_tokens):
+    def generate(self, idx, max_new_tokens, temperature=1.0, top_k=None):
+        """
+        generate 的 Docstring
+        
+        :param idx: (B, T)数组， 当前的context
+        :param max_new_tokens:生成多少个新的etokens 
+        :param temperature: >1.0 更疯狂，更开放; <1.0 更保守
+        :param top_k: i只保留概率最高的k个选项(截断尾部低概率单词)
+        """
         for _ in range(max_new_tokens):
             # 裁剪上下文
             idx_cond = idx[:, -self.config.block_size:]
@@ -137,6 +145,13 @@ class GPTLanguageModel(nn.Module):
             logits, _ = self(idx_cond)
             # 只取最后一个时间步
             logits = logits[:, -1, :]
+            # *:应用温度
+            logits = logits / temperature
+            # Top-K采样
+            if top_k is not None:
+                v, _ = torch.topk(logits, min(top_k, logits.size(-1)))
+                # 小于第k个概率的，概率全部变为-inf
+                logits[logits < v[:, [-1]]] = -float('Inf')
             # 概率转换
             probs = F.softmax(logits, dim=-1)
             # 采样

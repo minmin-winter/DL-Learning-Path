@@ -1,2 +1,6 @@
 torch
 numpy
+tiktoken
+gradio
+matplotlib
+transformers
