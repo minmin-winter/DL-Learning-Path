@@ -68,4 +68,4 @@ Through this project, I mastered:
 * The importance of `Temperature` and `Top-K` sampling in text generation.
 
 ---
-*Created by Minmin Winter*
+*Created by minmin-winter*
