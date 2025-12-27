@@ -3,6 +3,47 @@
 
 > 记录我从零开始死磕深度学习的每一天.  
 > "Slow is smooth, smooth is fast."
+## 📆 2025-12-27 Sat. | Day 10: 初探Hugging Face生态
+
+### 📝 核心进度
+
+- 使用了Hugging Face的工具，完成了加载外卖评论数据集的操作
+- 初探Transfomers, Datasets, Trainer等库， 感受到了HF封装完备的生态的强大
+
+### 🐛 Bug Logs
+
+- 无法解析导入...  ->  此环境下还没有安装这个库 -> pip install ...
+- max Retry[1/5] ->  网络连接出问题 -> 换镜像源等
+
+### 💡 思考
+
+可以明显的感受到差别学习流程上的差别，之前是from scratch, 现在是利用封装完好的Hugging Face生态来进行调包，更多的是学习流程以及data flow, 也或许这才是以后的理想状态了吧
+
+### ☁️ 碎碎念
+
+虽然今天很不适应学习方式，流程上的转变，但也得慢慢开始学习调包了，这确实可以大大的提高效率。明天就要学习LoRA了，希望明天也能有所收获。期末考试也快来了，总之，加油吧！ 💪
+
+## 📆 2025-12-26 Fri. | Day 9: 完成自己的第一个小项目
+
+### 📝 核心进度
+
+- 继续学习了temperature, top_k等概念
+- 完成了mini-GPT小项目的搭建，编写了dataset.py, train.py, inference.py等核心文件
+- 初步学习了使用tmux来进行长时间的训练, 并尝试处理了训练日志并通过复习Regex来捕获数据，画loss curve
+- 同时也学习了怎样更好地展示自己的作品：plot_loss.py可视化loss curve, interactive.py, 和app.py图形页面UI
+- 理解整理了.gitignore, 更深刻的理解了各个文件的作用
+- 更新整理了Github的README,requirements.txt等
+
+### 🐛 Bug Logs
+
+- missing key(s) in state_dict -> 字典里并不存在所提的键，可能被封装进字典中的字典里 -> 进行条件判断
+- too many indices for tensor of dimension 1 -> 维度对不上 -> unsuqeeze()升维/suqeeze()降维
+
+### ☁️ 碎碎念
+
+比较重要的一个点是现在才意识到以后README主要是用英文因为写作的，以后还是要自己多练习写这些东西，地道的英文写作，更多形式的可视化Markdown呈现, Latex写作，这些也是之后值得学习的  
+确实这几天学习的主要还是如何整理一个干净的仓库，实际上感觉并不比写代码，理解代码简单，看来未来还是任重而道远啊！ 💪
+
 ## 📆 2025-12-22 Mon. | Day 8: BPE调包与工程化搭建初体验
 
 ### 📝 核心进度

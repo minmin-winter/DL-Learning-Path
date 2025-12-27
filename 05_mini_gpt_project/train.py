@@ -50,7 +50,7 @@ def train():
 
     # 2.准备数据
     # 注意：这里需根据实际情况调整
-    data_path = "./data/mini_gpt/input.txt"
+    data_path = "./data/input.txt"
     train_loader, val_loader, dataset = get_data_loaders(cfg, data_path)
 
     # 工程化关键点: 从数据集中动态获取真实的vocab_size
